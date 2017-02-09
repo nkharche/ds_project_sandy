@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Theme Made By www.w3schools.com - No Copyright -->
+  <title>Hurricane Sandy Twitter Response</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+  body {
+      font: 20px Montserrat, sans-serif;
+      line-height: 1.8;
+      color: #f5f6f7;
+  }
+  p {font-size: 16px;}
+  .margin {margin-bottom: 45px;}
+  .bg-1 { 
+      background-color: #1abc9c; /* Green */
+      color: #ffffff;
+  }
+  .bg-2 { 
+      background-color: #474e5d; /* Dark Blue */
+      color: #ffffff;
+  }
+  .bg-2-2 {
+      background-color: #576175; /* Dark Blue */
+      color: #ffffff;
+  }
+  .bg-3 { 
+      background-color: #ffffff; /* White */
+      color: #555555;
+  }
+  .bg-4 { 
+      background-color: #2f2f2f; /* Black Gray */
+      color: #fff;
+  }
+  .container-fluid {
+      padding-top: 50px;
+      padding-bottom: 50px;
+  }
+  .container-fluid-max-width {
+      margin-right: auto;
+      margin-left: auto;
+      max-width: 800px; /* or 950px */
+  }
+  .navbar {
+      padding-top: 7px;
+      padding-bottom: 7px;
+      border: 0;
+      border-radius: 0;
+      margin-bottom: 0;
+      font-size: 16px;
+      letter-spacing: 5px;
+  }
+  .navbar-nav  li a:hover {
+      color: #1abc9c !important;
+  }
+  .padding-0 {
+      padding: 0;
+  }
+  .top-buffer {
+      margin-top:100px;
+  }
+  .iframe-container-1 {
+      position: relative;
+      padding-bottom: 150.0%;
+      padding-top: 0px;
+      height: 0;
+      overflow: hidden;
+  }
+  .iframe-container-1 iframe {
+      position: absolute;
+      top:0;
+      left: 0;
+      width: 100%;
+      height: 78%;
+  }
+  .iframe-container-2 {
+      position: relative;
+      padding-bottom: 50.0%;
+      padding-top: 10px;
+      height: 0;
+      overflow: hidden;
+  }
+  .iframe-container-2 iframe {
+      position: absolute;
+      top:0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+  }
+
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+<!--      <a class="navbar-brand" href="#">Me</a>-->
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#data">The Data</a></li>
+        <li><a href="#hashtags">Hashtags</a></li>
+        <li><a href="#geomaps">Geospatial Maps</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- First Container -->
+<div id="home" class="container-fluid bg-2 text-center">
+  <h2 class="margin"></h2>
+  <h3 class="margin">Hurricane Sandy Twitter Response</h3>
+  <div class="row">
+      <div class="col-sm-12">
+          <p class="text-left"> In recent years, the world has seen an increase in the frequency and intensity of natural disasters resulting from climate change. In these scenarios, social media platforms like Twitter can serve as a free and open distributed sensor network. If relevant information can be identified from the stream of Tweets, we can obtain local and timely information well before the news travels through traditional communication channels. This project analyzes Twitter streams using Natural Language Processing and Machine Learning techniques to map out power outages in the areas affected by Hurricane Sandy in real time.
+          </p>
+      </div>
+      <div class="col-sm-4">
+         <div class="iframe-container-1">
+         <iframe class="embed-responsive-item" width="100%" src="viz/sandy_path_bokeh.html"  allowfullscreen="" frameborder="0">
+         </iframe>
+         </div>
+      </div>
+      <div class="col-sm-8">
+          <img src="viz/sandy_twitter_bg_1.jpg" class="img-responsive center-block container-fluid-max-width" style="width:100%" alt="Image">
+      </div>
+  </div>
+</div>
+
+<!-- Second Container -->
+<div id="data" class="container-fluid bg-2-2 text-center">
+    <h3 class="margin">The Data</h3>
+    <p class="text-left"> The dataset contains over 4.5 million geo-tagged Tweets sent from Washington DC and 13 affected states within 12 days of Hurricane Sandy. The Tweets were scraped using Twitter's API. The  data was in JSON format with a total size of about 15 GB. The relevant information such as Tweet text, geolocation, and timestamps etc. was extracted and analyzed using Python Pandas and postprocessed data was saved in CSV files.
+    </p>
+    <p class="text-left"> The figure below shows number of Tweets per hour as a function of time. The Hurricane Sandy related Tweets were filtered out using key words such as Sandy, Hurricane, Storm, etc. The Sandy related Twitter activity peaks near the landfall, Oct. 29, 2012.
+    </p>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="iframe-container-2">
+            <iframe class="embed-responsive-item" align="center" src="viz/tweet_traffic_vs_time.html" allowfullscreen="" frameborder="0">
+            </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Third Container -->
+<div id="hashtags" class="container-fluid bg-2 text-center">
+    <h3 class="margin">Hashtag statistics</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="text-left"> The hastags #S(s)andy, #hurricaneS(s)andy, #frankestrom, #hurricane are more common around the landfall. We also see other popular hashtags reflecting other significant events happening around the same time, for example #debates,  #halloween.
+            </p>
+            <div class="iframe-container-2">
+            <iframe class="embed-responsive-item" align="center" src="viz/sandy_hashtag_heatmap_1.html" allowfullscreen="" frameborder="0">
+            </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Fourth Container -->
+<div id="geomaps" class="container-fluid bg-2-2 text-center">
+    <h3 class="margin">County Level Choropleth Maps</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            
+            <p class="text-left"> The county level choropleth map below shows geographical distribution of all Sandy related Tweets, power outage related Tweets, and Sentiment. The power outage related Tweets were filtered using a Naive Bayes classifier trained using a small subset containing about 500 Tweets heuristically (manually) determined to be relevant to power outage. All of the 4.8 million Tweets were labeled using this clasifier, of which 7,000 were found to be positive examples. <br>
+            It is important to take into account the significant variation in the number of Tweets originating from different zip code areas, densly populated areas tend generate more Tweets. To take this into account, we compare statistics as normalized by the total number of Tweets originating from each county. Not surprisingly, power outage and sentiment seem to be negatively correlated.
+            </p>
+            
+            <iframe class="embed-responsive-item" width="80%" height="520" frameborder="0" src="viz/sandy_cartodb_choropleth.html" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen>
+            </iframe>
+        </div>
+    </div>
+    
+    <h3 class="margin top-buffer">Spatiotemporal Maps</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="text-left"> The map below shows location of power outages as a function of time. There are virtually no power outages until Oct. 28, before the landfall. The number of power outages shoots up on Oct. 29. Most of the power outages seem to persist for several days after the landfall.
+            </p>
+            <iframe class="embed-responsive-item" width="80%" height="520" frameborder="0" src="viz/sandy_power_outage_geomap_time_slider.html" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen>
+            </iframe>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Footer -->
+<!--<footer class="container-fluid bg-4 text-center">-->
+<!--  <p>Bootstrap Theme Made By <a href="http://www.w3schools.com">www.w3schools.com</a></p> -->
+<!--</footer>-->
+
+</body>
+</html>
+

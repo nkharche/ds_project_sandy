@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hurricane Sandy Geospatial Analysis| CartoDB.js</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
+    <style>
+      html, body, #map {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        !background: black;
+}
+ 
+      #layer_selector {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        padding: 0;
+      }
+ 
+      #layer_selector ul {
+        padding: 0; margin: 0;
+        list-style-type: none;
+      }
+ 
+      #layer_selector li {
+        border-bottom: 1px solid #999;
+        padding: 15px 30px;
+        font-family: "Helvetica", Arial;
+        font-size: 13px;
+        color: #444;
+        cursor: auto;
+      }
+ 
+      #layer_selector li:hover {
+        background-color: #F0F0F0;
+        cursor: pointer;
+      }
+ 
+      #layer_selector li.selected {
+        background-color: #EEE;
+      }
+    </style>
+ 
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.ie.css" />
+    <![endif]-->
+
+    <script type='html' id="legend_0">
+      <div class='cartodb-legend density'>  
+      <ul>
+        <li class="min">
+          Sentiment
+        </li>
+        <li class="graph leg" style="border-radius: 0; border:none">
+        <div class="colors">
+          <div class="quartile" style="background-color:#70284a"></div>
+          <div class="quartile" style="background-color:#9c3f5d"></div>
+          <div class="quartile" style="background-color:#c8586c"></div>
+          <div class="quartile" style="background-color:#dc7176"></div>
+          <div class="quartile" style="background-color:#ee8a82"></div>
+          <div class="quartile" style="background-color:#f5ba98>"</div>
+        </div>
+
+        <div class="colors" style="font-weight:normal; text-align: center">
+          <div class="quartile" style="padding-top: 5px" >-1</div>
+          <div class="quartile" style="padding-top: 5px" > </div>
+          <div class="quartile" style="padding-top: 5px" > </div>
+          <div class="quartile" style="padding-top: 5px" > </div>
+          <div class="quartile" style="padding-top: 5px" > </div>
+          <div class="quartile" style="padding-top: 5px" >1</div>
+        </div>
+
+      </li>
+      </ul>
+      </div>
+    </script>
+
+
+    <script type='html' id="legend_1">
+      <div class='cartodb-legend density'>  
+      <ul>
+        <li class="min">
+          Fraction of power outage Tweets
+        </li>
+        <li class="graph leg" style="border-radius: 0; border:none">
+        <div class="colors">
+          <div class="quartile" style="background-color:#eff3ff"></div>
+          <div class="quartile" style="background-color:#bdd7e7"></div>
+          <div class="quartile" style="background-color:#6baed6"></div>
+          <div class="quartile" style="background-color:#3182bd"></div>
+          <div class="quartile" style="background-color:#08519c"></div>
+        </div>
+	</li>
+      </ul>
+      </div>
+    </script>
+
+
+    <script type='html' id="legend_2">
+      <div class='cartodb-legend density'>  
+      <ul>
+        <li class="min">
+          Total number of Sandy Tweets
+        </li>
+        <li class="graph leg" style="border-radius: 0; border:none">
+        <div class="colors">
+          <div class="quartile" style="background-color:#c4e6c3"></div>
+          <div class="quartile" style="background-color:#80c799"></div>
+          <div class="quartile" style="background-color:#4da284"></div>
+          <div class="quartile" style="background-color:#2d7974"></div>
+          <div class="quartile" style="background-color:#1d4f60"></div>
+
+        </div>                                          
+        </li>
+      </ul>
+      </div>
+    </script>
+
+
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="layer_selector" class="cartodb-infobox">
+      <ul>
+        <li id="abc" class="selected">All Sandy Tweets</li>
+        <li id="efg">Power Outage Tweets</li>
+        <li id="hij">Sentiment</li>
+      </ul>
+    </div>
+ 
+    <!-- include cartodb.js library -->
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+ 
+    <script>
+      var selectedLayer;
+      // create layer selector
+      function createSelector(layers) {
+        var sql = new cartodb.SQL({ user: 'documentation' });
+ 
+        var $options = $('#layer_selector li');
+        $options.click(function(e) {
+          // get the area of the selected layer
+          var $li = $(e.target);
+          var layer = $li.attr('id');
+          if(selectedLayer != layer ){
+            // definitely more elegant ways to do this, but went for
+            // ease of understanding
+            if (layer == 'abc'){
+              layers.getSubLayer(0).hide(); // Sentiment
+              layers.getSubLayer(1).hide(); // Power Outage Tweets
+              layers.getSubLayer(2).show(); // All Sandy Tweets
+
+              var customLegend = new cdb.geo.ui.Legend({
+                type: "custom",
+                show_title: false,
+                title: "",
+                template: $('#legend_2').html(),
+                visible: true
+                });
+               var stackedLegend = new cdb.geo.ui.StackedLegend({
+               legends: [customLegend]
+             });
+             $('#map').append(stackedLegend.render().el);
+
+            }
+            else if (layer == 'efg') {
+              layers.getSubLayer(0).hide();
+              layers.getSubLayer(1).show();
+              layers.getSubLayer(2).hide();
+
+              var customLegend = new cdb.geo.ui.Legend({
+                type: "custom",
+                show_title: false,
+                title: "",
+                template: $('#legend_1').html(),
+                visible: true
+                });
+               var stackedLegend = new cdb.geo.ui.StackedLegend({
+               legends: [customLegend]
+             });
+             $('#map').append(stackedLegend.render().el);
+
+            }
+            else if (layer == 'hij') {
+              layers.getSubLayer(0).show();
+              layers.getSubLayer(1).hide();
+              layers.getSubLayer(2).hide();
+
+              var customLegend = new cdb.geo.ui.Legend({
+                type: "custom",
+                show_title: false,
+                title: "",
+                template: $('#legend_0').html(),
+                visible: true
+                });
+               var stackedLegend = new cdb.geo.ui.StackedLegend({
+               legends: [customLegend]
+             });
+             $('#map').append(stackedLegend.render().el);
+
+            }
+          }
+        });
+      }
+ 
+      var layerN = {};
+      function main() {
+        var map = L.map('map', { 
+          zoomControl: true,
+          center: [39.45, -77.31],
+          zoom: 6
+        });
+        // get the currently selected style
+        selectedStyle = $('li.selected').attr('id');
+        var layerURL = 'https://nkharche.carto.com/api/v2/viz/180851e2-e81c-11e6-917c-0e233c30368f/viz.json'
+	cartodb.createLayer(map, layerURL)
+        .addTo(map)
+        .done(function(layers) {
+          createSelector(layers);
+        })
+        .error(function(err) {
+          console.log(err);
+        });
+
+	var base_layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+		  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+	  });
+	map.addLayer(base_layer);
+
+	var base_layer2 = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
+		  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+	  });
+	map.addLayer(base_layer2);
+	base_layer2.bringToFront();
+
+      }
+ 
+      window.onload = main;
+    </script>
+  </body>
+</html>
